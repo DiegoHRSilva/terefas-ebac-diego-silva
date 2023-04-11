@@ -1,0 +1,18 @@
+se o dia for dia de semana e não seja feriado
+abro meus olhos
+dou comando para despertador desligar
+levanto da minha cama
+vou ao banheiro e escovo os dentes
+volto ao quarto arrumo a cama 
+vou para a cozinha
+tomo cafe da manhã 
+volto para o banheiro e tomo um banho
+me arrumo
+e vou para o trabalho
+
+se o dia for final de semana ou feriado
+abro meus olhos 
+levanto da cama 
+vou ao banheiro escovar os dentes
+vou a cozinha tomar cafe da manhã
+e volto para a cama e fico deitado mechando no celular
