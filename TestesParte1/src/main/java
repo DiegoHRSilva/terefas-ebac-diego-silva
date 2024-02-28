@@ -1,0 +1,63 @@
+package TestesParte1;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Main {
+  public static Map<String, String> mapa = new LinkedHashMap<>();
+  public static List<String> grupoMasculino = new ArrayList<>();
+  public static List<String> grupoFeminino = new ArrayList<>();
+  public static Integer Contador = 0;
+
+  public static void adicionaGrupoFeminino(String nome) {
+    grupoFeminino.add(nome);
+  }
+
+  public static void adicionaGrupoMasculino(String nome) {
+    grupoMasculino.add(nome);
+  }
+
+  public static void main(String[] args) {
+    // TODO Auto-generated method stub
+
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Digite os dados neste formato nome - sexo separados por virgula");
+    String dados = sc.nextLine();
+
+    String[] nomes = dados.split(",");
+
+    for (String nomeSexo : nomes) {
+      String[] partes = nomeSexo.split("-");
+
+      String nome = partes[0];
+      String sexo = partes[1].toUpperCase();
+
+      mapa.put(nome, sexo);
+
+      for (Map.Entry<String, String> entry : mapa.entrySet()) {
+        if (entry.getKey().equals("F")) {
+          adicionaGrupoFeminino(nome);
+        } else if (entry.getKey().equals("M")) {
+          adicionaGrupoMasculino(nome);
+        } else {
+          System.out.println(nome + ": sexo invalido");
+        }
+      }
+    }
+
+    System.out.println("Grupo 1 (Sexo Masculino):");
+    for (String nome : grupoMasculino) {
+      System.out.println(nome);
+    }
+
+    System.out.println("Grupo 2 (Sexo Feminino):");
+    for (String nome : grupoFeminino) {
+      System.out.println(nome);
+    }
+
+  }
+
+}
