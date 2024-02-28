@@ -1,0 +1,25 @@
+package java;
+
+import java.util.Map;
+
+import org.junit.Test;
+
+import modulo23.Main;
+
+public class MainTest {
+
+  @Test
+  public void testNomesNosGrupos() {
+    Main main = new Main();
+    main.mapa.put("João", "M");
+    main.mapa.put("Maria", "F");
+    main.mapa.put("Ana", "F");
+
+    for (Map.Entry<String, String> entry : Main.mapa.entrySet()) {
+      if (entry.getValue().equals("F")) {
+        main.adicionaGrupoFeminino(entry.getKey());
+
+      }
+    }
+  }
+}
