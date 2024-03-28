@@ -6,76 +6,129 @@ import java.sql.SQLException;
 import br.com.diego.dao.generic.GenericDAO;
 import br.com.diego.domain.Produto;
 
-public class ProdutoDAO extends GenericDAO<Produto, String> implements IProdutoDAO {
+public class ProdutoDAO implements IProdutoDAO {
 	
-	public ProdutoDAO() {
-		super();
+	@Override
+	public Integer cadastrar(Produto produto) throws Exception {
+		Connection connection = null;
+		PreparedStatement stm = null;
+		try {
+			connection = ConnectionFactory.getConnection();
+			String sql = "INSERT INTO TB_PRODUTO (ID, CODIGO, NOME) VALUES (nextval('SQ_PRODUTO'),?,?)";
+			stm = connection.prepareStatement(sql);
+			stm.setString(1, produto.getCodigo());
+			stm.setString(2, produto.getNome());
+			return stm.executeUpdate();
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			if (stm != null && !stm.isClosed()) {
+				stm.close();
+			}
+			if (connection != null && !connection.isClosed()) {
+				connection.close();
+			}
+		}
+	}
+	
+	@Override
+	public Integer atualizar(Produto produto) throws Exception {
+		Connection connection = null;
+    		PreparedStatement stm = null;
+		try {
+			connection = ConnectionFactory.getConnection();
+			String sql = getSqlUpdate();
+			stm = connection.prepareStatement(sql);
+			adicionarParametrosUpdate(stm, cliente);
+			return stm.executeUpdate();
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			closeConnection(connection, stm, null);
+		}
 	}
 
 	@Override
-	public Class<Produto> getTipoClasse() {
-		return Produto.class;
+	public Produto consultar(String codigo) throws Exception {
+		Connection connection = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		Cliente cliente = null;
+		try {
+			connection = ConnectionFactory.getConnection();
+			String sql = "select * from tb_produto where codigo = ?";
+			stm = connection.prepareStatement(sql);
+			stm.setString(1, codigo);
+			rs = stm.executeQuery();
+			if (rs.next()) {
+				produto = new Produto();
+				produto.setId(rs.getLong("id"));
+				produto.setCodigo(rs.getString("codigo"));
+				produto.setNome(rs.getString("nome"));
+			}
+			return produto;
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			if (stm != null && !stm.isClosed()) {
+				stm.close();
+			}
+			if (connection != null && !connection.isClosed()) {
+				connection.close();
+			}
+		}
 	}
 
 	@Override
-	public void atualiarDados(Produto entity, Produto entityCadastrado) {
-		entityCadastrado.setCodigo(entity.getCodigo());
-		entityCadastrado.setDescricao(entity.getDescricao());
-		entityCadastrado.setNome(entity.getNome());
-		entityCadastrado.setValor(entity.getValor());
+	public Integer excluir(Produto produto) throws Exception {
+		Connection connection = null;
+		PreparedStatement stm = null;
+		try {
+			connection = ConnectionFactory.getConnection();
+			String sql = "DELETE FROM TB_PRODUTO WHERE CODIGO = ?";
+			stm = connection.prepareStatement(sql);
+			stm.setString(1, produto.getCodigo());
+			return stm.executeUpdate();
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			if (stm != null && !stm.isClosed()) {
+				stm.close();
+			}
+			if (connection != null && !connection.isClosed()) {
+				connection.close();
+			}
+		}
 	}
-
 	@Override
-	protected String getQueryInsercao() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("INSERT INTO TB_PRODUTO ");
-		sb.append("(ID, CODIGO, NOME, DESCRICAO, VALOR)");
-		sb.append("VALUES (nextval('sq_produto'),?,?,?,?)");
-		return sb.toString();
-	}
-
-	@Override
-	protected void setParametrosQueryInsercao(PreparedStatement stmInsert, Produto entity) throws SQLException {
-		stmInsert.setString(1, entity.getCodigo());
-		stmInsert.setString(2, entity.getNome());
-		stmInsert.setString(3, entity.getDescricao());
-		stmInsert.setBigDecimal(4, entity.getValor());
-	}
-
-	@Override
-	protected String getQueryExclusao() {
-		return "DELETE FROM TB_PRODUTO WHERE CODIGO = ?";
-	}
-
-	@Override
-	protected void setParametrosQueryExclusao(PreparedStatement stmExclusao, String valor) throws SQLException {
-		stmExclusao.setString(1, valor);
-	}
-
-	@Override
-	protected String getQueryAtualizacao() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("UPDATE TB_PRODUTO ");
-		sb.append("SET CODIGO = ?,");
-		sb.append("NOME = ?,");
-		sb.append("DESCRICAO = ?,");
-		sb.append("VALOR = ?");
-		sb.append(" WHERE CODIGO = ?");
-		return sb.toString();
-	}
-
-	@Override
-	protected void setParametrosQueryAtualizacao(PreparedStatement stmUpdate, Produto entity) throws SQLException {
-		stmUpdate.setString(1, entity.getCodigo());
-		stmUpdate.setString(2, entity.getNome());
-		stmUpdate.setString(3, entity.getDescricao());
-		stmUpdate.setBigDecimal(4, entity.getValor());
-		stmUpdate.setString(5, entity.getCodigo());
-	}
-
-	@Override
-	protected void setParametrosQuerySelect(PreparedStatement stmExclusao, String valor) throws SQLException {
-		stmExclusao.setString(1, valor);
+	public List<Produto> buscarTodos() throws Exception {
+		Connection connection = null;
+    		PreparedStatement stm = null;
+    		ResultSet rs = null;
+    		List<Produto> list = new ArrayList<>();
+    		Produto produto = null;
+		try {
+			connection = ConnectionFactory.getConnection();
+			String sql = getSqlSelectAll();
+			stm = connection.prepareStatement(sql);
+			rs = stm.executeQuery();
+			
+		    while (rs.next()) {
+		    	produto = new Produto();
+		    	Long id = rs.getLong("ID");
+		    	String nome = rs.getString("NOME");
+		    	String cd = rs.getString("CODIGO");
+		    	produto.setId(id);
+		    	produto.setNome(nome);
+		    	produto.setCodigo(cd);
+		    	list.add(produto);
+		    }
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			closeConnection(connection, stm, rs);
+		}
+		return list;
 	}
 
 }
