@@ -45,7 +45,7 @@ public class ProdutoTest {
 		
 		Produto produto = new Produto();
 		produto.setCodigo("10");
-		produto.setNome("Diego Silva");
+		produto.setNome("teste");
 		Integer countCad = ProdutoDAO.cadastrar(produto);
 		assertTrue(countCad == 1);
 		
@@ -64,7 +64,7 @@ public class ProdutoTest {
 		
 		Produto produto = new Produto();
 		produto.setCodigo("10");
-		produto.setNome("Diego Silva");
+		produto.setNome("teste");
 		Integer countCad = produtoDAO.cadastrar(produto);
 		assertTrue(countCad == 1);
 		
@@ -83,13 +83,13 @@ public class ProdutoTest {
 		
 		Produto produto = new Produto();
 		produto.setCodigo("10");
-		produto.setNome("Diego Silva");
+		produto.setNome("teste");
 		Integer countCad = ProdutoDAO.cadastrar(produto);
 		assertTrue(countCad == 1);
 		
 		Produto produtos = new Produto();
-		produtos.setCodigo("10");
-		produtos.setNome("Diego Silva");
+		produtos.setCodigo("20");
+		produtos.setNome("teste2");
 		Integer countCad2 = ProdutoDAO.cadastrar(produtos);
 		assertTrue(countCad2 == 1);
 		
@@ -114,7 +114,7 @@ public class ProdutoTest {
 		
 		Produto produto = new Produto();
 		produto.setCodigo("10");
-		produto.setNome("Diego Silva");
+		produto.setNome("teste");
 		Integer countCad = produtoDAO.cadastrar(produto);
 		assertTrue(countCad == 1);
 		
@@ -124,7 +124,7 @@ public class ProdutoTest {
 		assertEquals(produto.getNome(), produtoDB.getNome());
 		
 		produtoDB.setCodigo("20");
-		produtoDB.setNome("Outro nome");
+		produtoDB.setNome("teste2");
 		Integer countUpdate = produtoDAO.atualizar(produtoDB);
 		assertTrue(countUpdate == 1);
 		
