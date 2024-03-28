@@ -2,12 +2,6 @@ package br.com.diego.domain;
 
 import java.math.BigDecimal;
 
-import anotacao.ColunaTabela;
-import anotacao.Tabela;
-import anotacao.TipoChave;
-import br.com.diego.dao.Persistente;
-
-
 public class Produto  {
 	
 	private Long id;
