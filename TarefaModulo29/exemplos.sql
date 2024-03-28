@@ -3,6 +3,11 @@ start 1
 increment 1
 owned by tb_cliente.id;
 
+create sequence sq_produto
+	start 1
+	increment 1
+	owned by tb_produto.id;
+
 create table tb_cliente (
 	id bigint,
 	nome varchar(50) not null,
