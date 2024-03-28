@@ -26,7 +26,7 @@ public class ClienteServiceTest {
 	public void init() {
 		cliente = new Cliente();
 		cliente.setCpf(12312312312L);
-		cliente.setNome("diego");
+		cliente.setNome("Diego");
 		cliente.setCidade("Betim");
 		cliente.setEnd("End");
 		cliente.setEstado("MG");
