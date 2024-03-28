@@ -84,5 +84,33 @@ public class ClienteDAO implements IClienteDAO {
 			}
 		}
 	}
-
+	@Override
+	public Cliente buscarTodos() throws Exception {
+		Connection connection = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		Cliente cliente = null;
+		try {
+			connection = ConnectionFactory.getConnection();
+			String sql = "select * from tb_cliente_2";
+			stm = connection.prepareStatement(sql);
+			rs = stm.executeQuery();
+			if (rs.next()) {
+				cliente = new Cliente();
+				cliente.setId(rs.getLong("id"));
+				cliente.setCodigo(rs.getString("codigo"));
+				cliente.setNome(rs.getString("nome"));
+			}
+			return cliente;
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			if (stm != null && !stm.isClosed()) {
+				stm.close();
+			}
+			if (connection != null && !connection.isClosed()) {
+				connection.close();
+			}
+		}
+	}
 }
