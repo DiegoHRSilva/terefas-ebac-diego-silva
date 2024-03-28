@@ -15,6 +15,15 @@ create table tb_cliente (
 	constraint pk_id_cliente primary key(id)
 );
 
+create table tb_produto(
+	id bigint,
+	codigo varchar(10) not null,
+	nome varchar(50) not null,
+	descricao varchar(100) not null,
+	valor numeric(10,2) not null,
+	constraint pk_id_produto primary key(id)
+);
+
 select * from tb_cliente;
 drop table tb_cliente;
 
