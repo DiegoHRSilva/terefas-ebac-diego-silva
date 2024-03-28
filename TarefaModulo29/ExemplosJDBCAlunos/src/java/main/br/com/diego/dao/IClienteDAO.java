@@ -1,13 +1,18 @@
-package br.com.diego.dao;
+package br.com.diego.dao.generic.jdbc.dao;
 
-import br.com.diego.domain.Cliente;
+import java.util.List;
+
+import br.com.diego.domin.Cliente;
 
 public interface IClienteDAO {
 
-	
 	public Integer cadastrar(Cliente cliente) throws Exception;
-
-	public Cliente consultar(String codigo) throws Exception;
-
-	public Integer excluir(Cliente clienteBD) throws Exception;
+	
+	public Integer atualizar(Cliente cliente) throws Exception;
+	
+	public Cliente buscar(String codigo) throws Exception;
+	
+	public List<Cliente> buscarTodos() throws Exception;
+	
+	public Integer excluir(Cliente cliente) throws Exception;
 }
